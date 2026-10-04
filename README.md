@@ -47,7 +47,7 @@ PRIVATE_KEY=0x... npm run set-agent -- studio.eth --directory "contracts.eth, br
 
 ## The agents
 
-`agents/serve.ts` contains three small specialist helpers, each behind its **own HTTP endpoint**: `contracts` (:4001), `brand` (:4002) and `invoices` (:4003). Each is a focused system prompt over any OpenAI-compatible model (same `LLM_*` env as the router) and speaks the contract `POST {"question"} → {"answer"}`. Run them with `npm run agents`. To publish for real, deploy each behind a public https URL and put that URL in the helper's `app.agent-router.endpoint` record.
+`agents/serve.ts` contains three small specialist helpers, each behind its **own HTTP endpoint**: `contracts` (:4001), `brand` (:4002) and `invoices` (:4003). Each is a distinct specialist with its own grounding: `contracts` knows the studio's standard terms (NDA length, net-30, liability cap) and says which term a clause departs from; `brand` follows a house style and always offers three options; `invoices` answers only from a sample ledger and never invents invoices (`test/agents.test.ts` checks they stay distinct). Each is a focused system prompt over any OpenAI-compatible model (same `LLM_*` env as the router) and speaks the contract `POST {"question"} → {"answer"}`. Run them with `npm run agents`. To publish for real, deploy each behind a public https URL and put that URL in the helper's `app.agent-router.endpoint` record.
 
 ## Sepolia names (the intended test studio)
 
@@ -75,7 +75,7 @@ Then run the router with `DIRECTORY_NAME=iamdoraemon.eth`. **A fourth helper is 
 
 ```bash
 npm install
-cp .env.example .env     # set DIRECTORY_NAME and LLM_API_KEY
+cp .env.example .env     # set DIRECTORY_NAME and pick a provider (free options are listed in the file)
 set -a; source .env; set +a
 npm start                # http://localhost:3000
 ```
