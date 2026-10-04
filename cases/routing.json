@@ -1,0 +1,9 @@
+{
+  "description": "Recorded routing cases against the fixture studio (test/fixtures/agents.json). `expectedAgent` is the helper that must handle the request; null means no helper fits.",
+  "cases": [
+    { "id": "overdue-invoice", "question": "Where do we stand on the overdue invoice from March?", "expectedAgent": "invoices.eth" },
+    { "id": "nda-clause", "question": "Can you check the confidentiality clause in this NDA?", "expectedAgent": "contracts.eth" },
+    { "id": "tagline", "question": "Write me a punchy tagline for our new coffee brand", "expectedAgent": "brand.eth" },
+    { "id": "unrelated", "question": "What's the best route from Lisbon to Porto by train?", "expectedAgent": null }
+  ]
+}

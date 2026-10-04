@@ -1,0 +1,19 @@
+{
+  "name": "ens-agent-router",
+  "version": "1.0.0",
+  "description": "One front door for many AI helpers, discovered at runtime from self-describing ENS names.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "cases": "tsx scripts/run-cases.ts",
+    "mock-agents": "tsx scripts/mock-agents.ts",
+    "set-agent": "tsx scripts/set-agent.ts"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": { "viem": "^2.21.0", "zod": "^3.23.8" },
+  "devDependencies": { "@types/node": "^22.0.0", "tsx": "^4.19.0", "typescript": "^5.6.0" }
+}
