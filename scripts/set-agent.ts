@@ -15,7 +15,7 @@ for (let i = 0; i < args.length; i += 2) flags.set(args[i]!.replace(/^--/, ""), 
 
 const key = process.env.PRIVATE_KEY;
 if (!nameArg || !key || flags.size === 0) {
-  console.error('Usage: PRIVATE_KEY=0x... npm run set-agent -- <name.eth> [--description "..."] [--endpoint https://...] [--topics "a, b"] [--directory "x.eth, y.eth"]');
+  console.error('Usage: PRIVATE_KEY=0x... npm run set-agent -- <name.eth> [--description "..."] [--endpoint https://...] [--topics "a, b"] [--input "what it accepts"] [--directory "x.eth, y.eth"]');
   process.exit(1);
 }
 const endpoint = flags.get("endpoint");
@@ -28,6 +28,7 @@ const records: [string, string][] = [];
 if (flags.has("description")) records.push([AGENT_KEYS.description, flags.get("description")!]);
 if (endpoint) records.push([AGENT_KEYS.endpoint, endpoint]);
 if (flags.has("topics")) records.push([AGENT_KEYS.topics, flags.get("topics")!]);
+if (flags.has("input")) records.push([AGENT_KEYS.input, flags.get("input")!]);
 if (flags.has("directory")) records.push([DIRECTORY_KEY, flags.get("directory")!]);
 
 const name = normalizeEnsName(nameArg);

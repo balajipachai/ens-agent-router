@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test test/*.test.ts",
     "cases": "tsx scripts/run-cases.ts",
-    "mock-agents": "tsx scripts/mock-agents.ts",
+    "agents": "tsx agents/serve.ts",
     "set-agent": "tsx scripts/set-agent.ts"
   },
   "engines": { "node": ">=20" },

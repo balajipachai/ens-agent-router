@@ -1,9 +1,32 @@
 {
-  "studio.eth": { "app.agent-router.agents": "contracts.eth, brand.eth, invoices.eth, broken.eth, bad-url.eth, Not A Name, unreachable.eth" },
-  "contracts.eth": { "description": "Answers contract questions: NDAs, clauses, terms and legal review.", "app.agent-router.endpoint": "https://contracts.example.com/ask", "app.agent-router.topics": "contracts, nda, legal" },
-  "brand.eth": { "description": "Writes brand copy: taglines, product descriptions and tone of voice.", "app.agent-router.endpoint": "https://brand.example.com/ask", "app.agent-router.topics": "copywriting, brand" },
-  "invoices.eth": { "description": "Handles invoices: overdue payments, billing status and reminders.", "app.agent-router.endpoint": "https://invoices.example.com/ask", "app.agent-router.topics": "invoices, payments" },
-  "broken.eth": { "description": "A helper that forgot to publish its endpoint." },
-  "bad-url.eth": { "description": "Helper with an insecure endpoint record.", "app.agent-router.endpoint": "http://evil.example.com/ask" },
-  "late.eth": { "description": "Translates documents between languages.", "app.agent-router.endpoint": "https://translate.example.com/ask" }
+  "studio.eth": {
+    "app.agent-router.agents": "contracts.eth, brand.eth, invoices.eth, broken.eth, bad-url.eth, Not A Name, unreachable.eth"
+  },
+  "contracts.eth": {
+    "description": "Answers contract questions: NDAs, clauses, terms and legal review.",
+    "app.agent-router.endpoint": "https://contracts.example.com/ask",
+    "app.agent-router.topics": "contracts, nda, legal"
+  },
+  "brand.eth": {
+    "description": "Writes brand copy: taglines, product descriptions and tone of voice.",
+    "app.agent-router.endpoint": "https://brand.example.com/ask",
+    "app.agent-router.topics": "copywriting, brand"
+  },
+  "invoices.eth": {
+    "description": "Handles invoices: overdue payments, billing status and reminders.",
+    "app.agent-router.endpoint": "https://invoices.example.com/ask",
+    "app.agent-router.topics": "invoices, payments",
+    "app.agent-router.input": "A plain-text question about invoices or payments"
+  },
+  "broken.eth": {
+    "description": "A helper that forgot to publish its endpoint."
+  },
+  "bad-url.eth": {
+    "description": "Helper with an insecure endpoint record.",
+    "app.agent-router.endpoint": "http://evil.example.com/ask"
+  },
+  "late.eth": {
+    "description": "Translates documents between languages.",
+    "app.agent-router.endpoint": "https://translate.example.com/ask"
+  }
 }

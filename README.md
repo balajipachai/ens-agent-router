@@ -23,6 +23,7 @@ question ──▶ LLM picks one agent from the discovered list (agents as data 
 | `description` | what the helper is for (5-300 chars), the standard ENSIP-5 key |
 | `app.agent-router.endpoint` | public `https` URL accepting `POST {"question": "..."}` and returning `{"answer": "..."}` (plain text also accepted) |
 | `app.agent-router.topics` | optional comma-separated hints |
+| `app.agent-router.input` | optional: what the helper accepts, in plain words (default: a plain-text question) |
 
 The **directory** is any ENS name whose `app.agent-router.agents` record lists helper names (comma or newline separated). Add a helper = publish its records and append its name to that one record. No router change, no deploy. Discovery is re-read every `AGENTS_TTL_MS` (default 60 s).
 
@@ -44,6 +45,32 @@ PRIVATE_KEY=0x... npm run set-agent -- studio.eth --directory "contracts.eth, br
 - **Honest "no helper".** No agents, a `null` choice, an unusable model reply, or an undiscovered pick → an explicit no-suitable-helper response. It never falls back to a default helper.
 - **Prompt isolation.** Descriptions are untrusted ENS text: they travel as JSON in a user message, never in the system prompt.
 
+## The agents
+
+`agents/serve.ts` contains three small specialist helpers, each behind its **own HTTP endpoint**: `contracts` (:4001), `brand` (:4002) and `invoices` (:4003). Each is a focused system prompt over any OpenAI-compatible model (same `LLM_*` env as the router) and speaks the contract `POST {"question"} → {"answer"}`. Run them with `npm run agents`. To publish for real, deploy each behind a public https URL and put that URL in the helper's `app.agent-router.endpoint` record.
+
+## Sepolia names (the intended test studio)
+
+| ENS name (Sepolia) | role | records |
+| --- | --- | --- |
+| `iamdoraemon.eth` | **directory** | `app.agent-router.agents` = `contracts.iamdoraemon.eth, brand.iamdoraemon.eth, invoices.iamdoraemon.eth` |
+| `contracts.iamdoraemon.eth` | contracts helper | `description`, `app.agent-router.endpoint`, `topics`, `input` |
+| `brand.iamdoraemon.eth` | brand copy helper | same |
+| `invoices.iamdoraemon.eth` | invoices helper | same |
+
+**Status: records not yet published.** Create the three subnames in sepolia.app.ens.domains, then publish from the owning wallet:
+
+```bash
+PRIVATE_KEY=0x... npm run set-agent -- invoices.iamdoraemon.eth \
+  --description "Handles invoices: overdue payments, billing status and reminders." \
+  --endpoint https://<your-invoices-host>/ --topics "invoices, payments" \
+  --input "A plain-text question about invoices or payments"
+PRIVATE_KEY=0x... npm run set-agent -- iamdoraemon.eth \
+  --directory "contracts.iamdoraemon.eth, brand.iamdoraemon.eth, invoices.iamdoraemon.eth"
+```
+
+Then run the router with `DIRECTORY_NAME=iamdoraemon.eth`. **A fourth helper is records only:** publish its name's records and append it to the directory record. The router is not touched.
+
 ## Run it
 
 ```bash
@@ -53,7 +80,7 @@ set -a; source .env; set +a
 npm start                # http://localhost:3000
 ```
 
-To try it without hosting helpers, run `npm run mock-agents` (three local helpers on :4001-4003), point helper records at them and start the router with `ALLOW_LOCALHOST_ENDPOINTS=true`.
+To try it locally, run `npm run agents`, point the helper records at `http://localhost:400x` and start the router with `ALLOW_LOCALHOST_ENDPOINTS=true` (development only; otherwise https is required).
 
 ## Tests and recorded cases
 

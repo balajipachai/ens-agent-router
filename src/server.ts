@@ -39,7 +39,7 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
   if (req.method === "GET" && url.pathname === "/api/agents") {
     const d = await getAgents();
     send(res, 200, {
-      agents: d.agents.map((a) => ({ name: a.name, description: a.description, topics: a.topics })),
+      agents: d.agents.map((a) => ({ name: a.name, description: a.description, topics: a.topics, input: a.input })),
       skipped: d.skipped,
       discoveredAt: new Date(d.discoveredAt).toISOString(),
     });

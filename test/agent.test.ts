@@ -36,3 +36,10 @@ test("directory list is split, trimmed, deduplicated and bounded", () => {
   assert.deepEqual(parseDirectoryList("a.eth, b.eth\nA.eth,, a.eth"), ["a.eth", "b.eth", "A.eth"]);
   assert.equal(parseDirectoryList(Array.from({ length: 200 }, (_, i) => `x${i}.eth`).join(",")).length, 50);
 });
+
+test("the optional input record is cleaned, bounded and defaulted", () => {
+  const base = { description: "Does useful things for clients", endpoint: "https://a.example.com/x", topics: null };
+  assert.equal(parseAgent("a.eth", { ...base, input: "  JSON {question} \n" }, false)?.input, "JSON {question}");
+  assert.equal(parseAgent("a.eth", { ...base, input: "x".repeat(500) }, false)?.input.length, 100);
+  assert.equal(parseAgent("a.eth", base, false)?.input, "A plain-text question");
+});

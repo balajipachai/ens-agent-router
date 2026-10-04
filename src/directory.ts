@@ -10,10 +10,10 @@ export interface Discovery {
 }
 
 async function readAgent(name: string, rpc: PublicClient, allowLocal: boolean): Promise<Agent | null> {
-  const [description, endpoint, topics] = await Promise.all(
+  const [description, endpoint, topics, input] = await Promise.all(
     (Object.values(AGENT_KEYS) as string[]).map((key) => rpc.getEnsText({ name, key })),
   );
-  return parseAgent(name, { description: description ?? null, endpoint: endpoint ?? null, topics: topics ?? null }, allowLocal);
+  return parseAgent(name, { description: description ?? null, endpoint: endpoint ?? null, topics: topics ?? null, input: input ?? null }, allowLocal);
 }
 
 /**

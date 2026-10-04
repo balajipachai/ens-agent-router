@@ -18,7 +18,7 @@ export const SYSTEM_PROMPT = [
 export function buildMessages(question: string, agents: Agent[]): ChatMessage[] {
   const data = {
     question,
-    agents: agents.map((a) => ({ name: a.name, description: a.description, topics: a.topics })),
+    agents: agents.map((a) => ({ name: a.name, description: a.description, topics: a.topics, accepts: a.input })),
   };
   return [
     { role: "system", content: SYSTEM_PROMPT },
